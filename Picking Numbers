@@ -1,0 +1,91 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    /*
+     * Complete the 'pickingNumbers' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts INTEGER_ARRAY a as parameter.
+     */
+
+    public static int pickingNumbers(List<Integer> a) {
+    // Write your code here
+    int length = 0, diff = 2;
+    int[] arr = a.stream().mapToInt(Integer::intValue).toArray();
+    //int []count = new int[a.size()-1];
+
+    Arrays.sort(arr);
+    //Arrays.sort(a);
+int len=arr.length;
+int max=0;
+for(int i=len-1;i>=0;i--){
+    int count=1;
+    for(int j=i-1;j>=0;j--){     
+
+        if((arr[i]-arr[j])<2){
+            count++;
+        }
+
+    }
+    max=count>max?count:max;
+}
+
+    return max;
+}
+
+    
+        /*for(int i = 0; i < arr.length - 1; i++){
+            if((arr[i + 1] - arr[i] == 1) || (arr[i + 1] - arr[i] == 0)) {
+                if(i != 0) {
+                    diff = arr[i + 1] - arr[i - 1];
+                    length++;
+                    if(diff < 2)
+                        length--;
+                    } 
+                    
+                else if(i == 0) 
+                    length++;
+
+                if(length >= 4){
+                    return 5;
+                }
+            }
+        }
+
+        return length++;
+*/
+    
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        List<Integer> a = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(toList());
+
+        int result = Result.pickingNumbers(a);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
